@@ -79,16 +79,34 @@ def extract_reviews():
         print("⚠️  No se encontraron reseñas en este rango.")
         return
 
-    # 4) Agrupar por mes y subir CSVs
+    # 4) Agrupar por mes y subir CSVs (con fusión si ya existe)
     df["mes"] = pd.to_datetime(df["at"]).dt.strftime("%Y_%m")
     s3 = boto3.client("s3")
 
     for ym, grupo in df.groupby("mes"):
         key = f"{RAW_PREFIX}/{ym}/reviews_{ym}.csv"
+        # Intentar descargar archivo existente de S3
+        try:
+            obj = s3.get_object(Bucket=BUCKET, Key=key)
+            prev = pd.read_csv(io.BytesIO(obj["Body"].read()))
+            print(f"   • Archivo existente encontrado para {ym}, fusionando...")
+        except s3.exceptions.NoSuchKey:
+            prev = pd.DataFrame()
+        except Exception as e:
+            print(f"   ⚠️  Error al leer archivo existente: {e}")
+            prev = pd.DataFrame()
+
+        # Fusionar sin duplicados por reviewId
+        if not prev.empty:
+            merged = pd.concat([prev, grupo.drop(columns=["mes"])], ignore_index=True)
+            merged = merged.drop_duplicates(subset=["reviewId"])
+        else:
+            merged = grupo.drop(columns=["mes"])
+
         buf = io.StringIO()
-        grupo.drop(columns=["mes"]).to_csv(buf, index=False, encoding="utf-8")
+        merged.to_csv(buf, index=False, encoding="utf-8")
         s3.put_object(Bucket=BUCKET, Key=key, Body=buf.getvalue())
-        print(f"✓ {len(grupo):,} reseñas subidas → s3://{BUCKET}/{key}")
+        print(f"✓ {len(merged):,} reseñas subidas → s3://{BUCKET}/{key}")
 
 if __name__ == "__main__":
     extract_reviews()
