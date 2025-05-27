@@ -1,0 +1,13 @@
+streamlit
+boto3
+pandas
+plotly
+wordcloud
+streamlit-aggrid
+altair
+numpy
+gensim
+stop-words
+joblib
+scikit-learn
+google_play_scraper

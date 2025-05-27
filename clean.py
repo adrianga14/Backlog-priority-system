@@ -15,7 +15,8 @@ s3 = boto3.client("s3")
 def clean_new_reviews(ym: str):
     """
     1) Descarga raw/playstore/{ym}/reviews_{ym}.csv
-    2) Elimina columnas userName y userImage
+    2) Elimina columnas userName, userImage, reviewCreatedVersion, replyContent, repliedAt
+    2.5) Procesar fecha: convertir 'at' a datetime y separar fecha y hora
     3) Normaliza texto (quita acentos y stop-words)
     4) Guarda clean/{ym}/clean_reviews_{ym}.csv
     """
@@ -24,8 +25,13 @@ def clean_new_reviews(ym: str):
     obj     = s3.get_object(Bucket=BUCKET, Key=raw_key)
     df      = pd.read_csv(io.BytesIO(obj["Body"].read()), parse_dates=["at"])
 
+    # 2.5) Procesar fecha: convertir 'at' a datetime y separar fecha y hora
+    df['at'] = pd.to_datetime(df['at'])
+    df['review_date'] = df['at'].dt.date
+    df['review_time'] = df['at'].dt.time
+
     # 2) elimina columnas que NO queremos
-    df = df.drop(columns=["userName", "userImage"], errors="ignore")
+    df = df.drop(columns=["userName", "userImage", "reviewCreatedVersion", "replyContent", "repliedAt"], errors="ignore")
 
     # 3) función de limpieza
     sw = set(get_stop_words("spanish"))
@@ -64,4 +70,4 @@ def main():
 
 
 if __name__ == "__main__":
-    clean()
+    main()
