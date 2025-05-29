@@ -5,7 +5,7 @@ import boto3
 import pandas as pd
 import joblib
 
-from config import BUCKET, CLEAN_PREFIX, MODEL_KEY, SENTIMENT_PREFIX
+from config import BUCKET, CLEAN_PREFIX, MODEL_KEY_V2, SENTIMENT_PREFIX
 # Asegúrate de añadir en config.py:
 # SENTIMENT_PREFIX = "sentimientos"
 
@@ -36,7 +36,7 @@ def apply_sentiment():
 
     # 3) Descargar y cargar el modelo balanceado
     tmp_model = "/tmp/model.pkl"
-    s3.download_file(BUCKET, MODEL_KEY, tmp_model)
+    s3.download_file(BUCKET, MODEL_KEY_V2, tmp_model)
     pipe = joblib.load(tmp_model)
     print("🔍 Modelo balanceado cargado desde S3")
 

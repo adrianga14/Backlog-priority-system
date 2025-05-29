@@ -22,6 +22,7 @@ RAW_CLEAN_KEY = f"{CLEAN_PREFIX}/reviews_new.csv"
 
 # — Fase 3: sentimiento —
 MODEL_KEY     = "models/model_logreg_bal.pkl"  # pipeline balanceado en S3
+MODEL_KEY_V2  = "models/model_logreg_bal_v2.pkl"  # modelo binario (pos/neg)
 
 # — Fase 3 output —
 ENRICHED_KEY  = f"{CLEAN_PREFIX}/reviews_with_sentiment.csv"
