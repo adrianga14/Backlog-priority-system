@@ -4,7 +4,7 @@ from extract import extract_reviews
 from clean import main as clean_main
 from sentiment import apply_sentiment
 from topics import apply_topics
-from priority import compute_priorities
+
 
 def run_pipeline():
     """
@@ -30,8 +30,6 @@ def run_pipeline():
         print("➡️ Detectando tópicos...")
         apply_topics()
 
-        print("➡️ Calculando prioridades...")
-        compute_priorities()
 
         print("✅ Pipeline ejecutado correctamente.")
 
