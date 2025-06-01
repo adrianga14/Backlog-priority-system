@@ -18,7 +18,7 @@ s3 = boto3.client("s3")
 
 
 # ---------------------------------------------------------
-# 1) DICCIONARIO DE CORRECCIONES ORTOGRÁFICAS / TYPOS
+# 1) DICCIONARIO DE CORRECCIONES ORTOGRÁFICAS 
 # ---------------------------------------------------------
 typo_corrections = {
     "execelente": "excelente",

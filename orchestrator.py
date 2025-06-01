@@ -5,7 +5,6 @@ from clean import main as clean_main
 from sentiment import apply_sentiment
 from topics import apply_topics
 
-
 def run_pipeline():
     """
     Función central que ejecuta todo el flujo del pipeline:
@@ -13,7 +12,6 @@ def run_pipeline():
     2) Limpia texto
     3) Aplica análisis de sentimientos
     4) Detecta tópicos
-    5) Calcula prioridades
     """
     try:
         print("🟡 Iniciando pipeline...")
@@ -24,15 +22,13 @@ def run_pipeline():
         print("➡️ Limpiando texto...")
         clean_main()
 
-        print("➡️ Aplicando análisis de sentimientos...")
+        print("➡️ Aplicando sentimiento...")
         apply_sentiment()
 
         print("➡️ Detectando tópicos...")
         apply_topics()
 
-
         print("✅ Pipeline ejecutado correctamente.")
-
         return {
             "statusCode": 200,
             "body": "Pipeline ejecutado correctamente"

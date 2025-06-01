@@ -1,39 +1,38 @@
-streamlit
-boto3
-pandas
-plotly
-wordcloud
-streamlit-aggrid
-altair
-numpy
-gensim
-stop-words
-joblib
-scikit-learn
-google_play_scraper
-# PyTorch (CPU-only) y sus utilidades
+# ------------------------------------------------------------
+# 1) PyTorch (CPU-only) y sus utilidades
+# ------------------------------------------------------------
 torch==1.13.1+cpu
 torchvision==0.14.1+cpu
 torchaudio==0.13.1+cpu
 -f https://download.pytorch.org/whl/cpu/torch_stable.html
 
-# Transformers para embeddings (compatible con CPU)
+# ------------------------------------------------------------
+# 2) Transformers (para embeddings, compatible con CPU)
+# ------------------------------------------------------------
 transformers==4.30.2
 
-# BERTopic y sus dependencias
+# ------------------------------------------------------------
+# 3) BERTopic y sus dependencias (UMAP + HDBSCAN)
+# ------------------------------------------------------------
 bertopic==0.13.1
 umap-learn==0.5.3
 hdbscan==0.8.29
 
-# Scikit-learn y Joblib (compatibles con BERTopic)
+# ------------------------------------------------------------
+# 4) Scikit-learn y Joblib (compatibles con BERTopic)
+# ------------------------------------------------------------
 scikit-learn==1.2.2
 joblib==1.2.0
 
-# Numpy y Pandas (versiones estables para Lambda)
+# ------------------------------------------------------------
+# 5) Numpy y Pandas (versiones estables para Lambda)
+# ------------------------------------------------------------
 numpy==1.23.5
 pandas==1.5.3
 
-# Resto de librerías (sin pin o con la última compatible)
+# ------------------------------------------------------------
+# 6) Resto de librerías (sin pin o con la última compatible)
+# ------------------------------------------------------------
 streamlit
 boto3
 altair
