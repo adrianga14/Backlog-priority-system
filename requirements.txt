@@ -1,42 +1,49 @@
-# ------------------------------------------------------------
-# 1) PyTorch (CPU-only) y sus utilidades
-# ------------------------------------------------------------
-torch==1.13.1+cpu
-torchvision==0.14.1+cpu
-torchaudio==0.13.1+cpu
--f https://download.pytorch.org/whl/cpu/torch_stable.html
+# -------------------------------------------------------
+# requirements.txt con versiones exactas
+# -------------------------------------------------------
 
-# ------------------------------------------------------------
-# 2) Transformers (para embeddings, compatible con CPU)
-# ------------------------------------------------------------
-transformers==4.30.2
+# PyTorch (+CPU builds): indicamos el índice para wheels de CPU
+-f https://download.pytorch.org/whl/cu121
 
-# ------------------------------------------------------------
-# 3) BERTopic y sus dependencias (UMAP + HDBSCAN)
-# ------------------------------------------------------------
-bertopic==0.13.1
-umap-learn==0.5.3
-hdbscan==0.8.29
+torch==2.1.0
+torchvision==0.16.0
+torchaudio==2.1.0
 
-# ------------------------------------------------------------
-# 4) Scikit-learn y Joblib (compatibles con BERTopic)
-# ------------------------------------------------------------
+# BERTopic y sus dependencias
+bertopic==0.17.0
+umap-learn==0.5.2
+hdbscan==0.8.32
+sentence-transformers==4.1.0
+
+# Utilidades de ML/NLP
 scikit-learn==1.2.2
-joblib==1.2.0
+joblib==1.5.0
+numpy==1.25.2
+pandas==2.1.4
 
-# ------------------------------------------------------------
-# 5) Numpy y Pandas (versiones estables para Lambda)
-# ------------------------------------------------------------
-numpy==1.23.5
-pandas==1.5.3
+# AWS / Visualización / Streaming
+boto3==1.35.99
+streamlit==1.24.1
+altair==5.0.1
+plotly==6.0.1
+streamlit-aggrid==0.4.5
+wordcloud==1.9.2
 
-# ------------------------------------------------------------
-# 6) Resto de librerías (sin pin o con la última compatible)
-# ------------------------------------------------------------
-streamlit
-boto3
-altair
-plotly
-streamlit-aggrid
-wordcloud
-google-play-scraper==0.9.0
+# Stop-words y scraping de Google Play
+stop-words==2018.7.23
+google-play-scraper==1.2.7
+
+# Dependencias internas requeridas por BERTopic/HDBSCAN/sentence-transformers
+transformers==4.52.4
+tokenizers==0.21.1
+huggingface-hub==0.32.3
+pynndescent==0.5.13
+numba==0.61.2
+llvmlite==0.44.0
+
+# -------------------------------------------------------
+# Herramientas básicas de empaquetado
+# -------------------------------------------------------
+pip==23.0.1
+setuptools==65.5.0
+wheel==0.45.1

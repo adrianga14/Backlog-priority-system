@@ -4,7 +4,7 @@
 APP_ID     = "com.bancomer.mbanking"
 
 # — S3 bucket y prefijos —
-BUCKET         = "bbva-playstore-reviews"
+BUCKET = "bbva-playstore-reviews"
 RAW_PREFIX     = "raw/playstore"     # lugar donde se suben los CSV mensuales originales
 CLEAN_PREFIX   = "clean/playstore"   # lugar donde se suben los CSV limpios
 SENTIMENT_PREFIX = "sentimientos"    # lugar donde se suben los CSV con sentimiento
@@ -22,7 +22,8 @@ RAW_CLEAN_KEY = f"{CLEAN_PREFIX}/reviews_new.csv"
 
 # — Fase 3: sentimiento —
 MODEL_KEY     = "models/model_logreg_bal.pkl"  # pipeline balanceado en S3
-MODEL_KEY_V2  = "models/model_logreg_bal_v2.pkl"  # modelo binario (pos/neg)
+MODEL_KEY_V2 = "models/model_logreg_bal_v2.pkl"  # modelo binario (pos/neg)
+
 
 # — Fase 3 output —
 ENRICHED_KEY  = f"{CLEAN_PREFIX}/reviews_with_sentiment.csv"
