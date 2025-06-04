@@ -18,6 +18,16 @@ from config import BUCKET, TOPICS_PREFIX
 # En config.py deben existir:
 #    BUCKET = "bbva-playstore-reviews"
 #    TOPICS_PREFIX = "topicos/playstore"
+aws_access_key_id     = st.secrets["aws"]["AWS_ACCESS_KEY_ID"]
+aws_secret_access_key = st.secrets["aws"]["AWS_SECRET_ACCESS_KEY"]
+aws_region            = st.secrets["aws"].get("us-east-2")
+
+s3 = boto3.client("s3",
+    aws_access_key_id     = aws_access_key_id,
+    aws_secret_access_key = aws_secret_access_key,
+    region_name           = aws_region
+)
+
 
 # ================================================
 # 1) Configuración general de la página
@@ -35,7 +45,6 @@ st.title("📊 Dashboard: Sentimiento y Tópicos de Reseñas ")
 # ================================================
 @st.cache_data
 def list_csv_keys(bucket: str, prefix: str) -> list[str]:
-    s3 = boto3.client("s3")
     paginator = s3.get_paginator("list_objects_v2")
     keys = []
     for page in paginator.paginate(Bucket=bucket, Prefix=prefix):
