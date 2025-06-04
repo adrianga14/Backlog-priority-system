@@ -20,7 +20,7 @@ from config import BUCKET, TOPICS_PREFIX
 #    TOPICS_PREFIX = "topicos/playstore"
 aws_access_key_id     = st.secrets["aws"]["AWS_ACCESS_KEY_ID"]
 aws_secret_access_key = st.secrets["aws"]["AWS_SECRET_ACCESS_KEY"]
-aws_region            = st.secrets["aws"].get("us-east-2")
+aws_region            = st.secrets["aws"]["AWS_DEFAULT_REGION"] 
 
 s3 = boto3.client("s3",
     aws_access_key_id     = aws_access_key_id,
@@ -62,7 +62,7 @@ def load_all_review_topics(bucket: str, prefix: str) -> pd.DataFrame:
     sentiment_pred, topic_id, topic_label, appVersion).
     Devuelve un único DataFrame con todas las reseñas de todos los meses.
     """
-    s3 = boto3.client("s3")
+ 
     keys = list_csv_keys(bucket, prefix)
     dfs = []
     for key in keys:
