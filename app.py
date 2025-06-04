@@ -345,7 +345,7 @@ sent_chart = (
         y=alt.Y("Cantidad:Q", title="Cantidad de reseñas"),
         color=alt.Color("Tipo:N", title="Sentimiento",
                         scale=alt.Scale(domain=["Positivas", "Negativas"], 
-                                        range=["#e63946", "#2a9d8f"])),
+                                        range=["#2a9d8f", "#e63946"])),
         tooltip=[
             alt.Tooltip("Fecha:T", title="Fecha"),
             alt.Tooltip("Tipo:N", title="Sentimiento"),
