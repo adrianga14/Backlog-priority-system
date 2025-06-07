@@ -47,7 +47,6 @@ def extract_reviews():
         for f in filas:
             fecha = f["at"].astimezone(TZ_MX)
             if fecha < start_dt:
-                # llegamos al rango anterior → salimos completamente
                 stop_early = True
                 break
             if fecha <= end_dt:
@@ -56,7 +55,6 @@ def extract_reviews():
         if stop_early:
             break
 
-        # control de lotes vacíos
         if not filas:
             vacios += 1
             if vacios >= MAX_VACIOS:
@@ -65,7 +63,6 @@ def extract_reviews():
         else:
             vacios = 0
 
-        # terminamos si no hay token o ya visto
         if not token_next or token_next in seen:
             break
 
@@ -73,19 +70,20 @@ def extract_reviews():
         token = token_next
         time.sleep(PAUSA_S)
 
-    # 3) DataFrame y chequeo
+    # 3) DataFrame y eliminación de columnas no deseadas
     df = pd.DataFrame(all_rows)
     if df.empty:
         print("⚠️  No se encontraron reseñas en este rango.")
         return
 
-    # 4) Agrupar por mes y subir CSVs (con fusión si ya existe)
+    df = df.drop(columns=["userName", "userImage", "reviewCreatedVersion", "replyContent", "repliedAt"], errors="ignore")
+
+    # 4) Agrupar por mes y subir CSVs
     df["mes"] = pd.to_datetime(df["at"]).dt.strftime("%Y_%m")
     s3 = boto3.client("s3")
 
     for ym, grupo in df.groupby("mes"):
         key = f"{RAW_PREFIX}/{ym}/reviews_{ym}.csv"
-        # Intentar descargar archivo existente de S3
         try:
             obj = s3.get_object(Bucket=BUCKET, Key=key)
             prev = pd.read_csv(io.BytesIO(obj["Body"].read()))
@@ -110,3 +108,4 @@ def extract_reviews():
 
 if __name__ == "__main__":
     extract_reviews()
+
