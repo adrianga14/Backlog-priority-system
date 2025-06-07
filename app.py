@@ -451,7 +451,7 @@ with col4:
 st.markdown("---")
 
 # ================================================
-#11) Explorador de reseñas por múltiples tópicos y calificación
+# 11) Explorador de reseñas por múltiples tópicos y calificación
 # ================================================
 st.markdown("### 5) Explora reseñas de uno o más tópicos")
 
@@ -461,7 +461,9 @@ sentiment_choice = st.radio(
     index=0
 )
 
-mask_sent = df_range["sentiment_pred"].str.upper() == ("POS" if sentiment_choice == "Positivas" else "NEG")
+mask_sent = df_range["sentiment_pred"].str.upper() == (
+    "POS" if sentiment_choice == "Positivas" else "NEG"
+)
 topics_filtrados = df_range[mask_sent]["topic_label"].unique().tolist()
 topics_filtrados = [t for t in topics_filtrados if t not in ["outlier", "Comentario Corto"]]
 label_map = {clean_label(t): t for t in topics_filtrados}
@@ -490,14 +492,28 @@ if selected_topics_clean:
             f"**Reseñas {sentiment_choice.lower()} de tópicos seleccionados "
             f"({', '.join(selected_topics_clean)})**:"
         )
+        # añadimos la columna appVersion y la mostramos como "version"
         df_muestra = df_topic_sel[[
-            "review_date", "review_time", "topic_label", "content", "score"
+            "review_date",
+            "review_time",
+            "topic_label",
+            "content",
+            "score",
+            "appVersion"
         ]].copy()
-        df_muestra.columns = ["Fecha", "Hora", "Tópico", "Contenido", "Calificación"]
+        df_muestra.columns = [
+            "Fecha",
+            "Hora",
+            "Tópico",
+            "Contenido",
+            "Calificación",
+            "version"
+        ]
         df_muestra["Tópico"] = df_muestra["Tópico"].apply(clean_label)
         st.dataframe(df_muestra, use_container_width=True, height=300)
     else:
         st.write("No hay reseñas para esos tópicos y calificación en el conjunto filtrado.")
 else:
     st.info("Selecciona uno o más tópicos disponibles según el sentimiento elegido.")
+
 # FIN DE app.py
