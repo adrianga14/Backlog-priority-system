@@ -1,5 +1,8 @@
 # config.py
 
+# Versión actual del pipeline (sincronizada con el archivo VERSION)
+PIPELINE_VERSION = "2.0"
+
 # — Play Store app ID —
 APP_ID     = "com.bancomer.mbanking"
 
