@@ -14,19 +14,21 @@
  
  ---
  
- ## 🛠️ Estructura del Proyecto
- Backlog-priority-system/
- │
- ├── clean.py           # Limpieza de texto, fechas y columnas irrelevantes
- ├── extract.py         # Extracción de datos crudos desde S3
- ├── sentiment.py       # Clasificación de sentimientos (modelo simple)
- ├── topics.py          # Modelado de temas con LDA/BERT
--├── priority.py        # Cálculo de prioridad por frecuencia x sentimiento
-+├── priority.py        # (obsoleto) calculaba prioridad solo por frecuencia
-+├── orchestrator.py    # Orquestador que ejecuta el pipeline completo
-+├── app.py             # Dashboard interactivo de sentimiento y tópicos
- ├── config.py          # Rutas S3 y configuración central
- └── requirements.txt   # Dependencias necesarias
+ 
+ ## 📋 Estructura del proyecto
+
+Backlog-priority-system
+
+	•	clean.py — Limpieza de texto, fechas y columnas irrelevantes
+	•	extract.py — Extracción de datos crudos desde S3
+	•	sentiment.py — Clasificación de sentimientos (modelo simple)
+	•	topics.py — Modelado de temas con LDA/BERT
+	•	priority.py — Cálculo de prioridad por frecuencia x sentimiento
+	•	priority.py (obsoleto) — Calculaba prioridad solo por frecuencia
+	•	orchestrator.py — Orquestador que ejecuta el pipeline completo
+	•	app.py — Dashboard interactivo de sentimiento y tópicos
+	•	config.py — Rutas S3 y configuración central
+	•	requirements.txt — Dependencias necesarias
  ---
  
  ## 📦 Dependencias
