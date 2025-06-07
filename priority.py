@@ -1,4 +1,9 @@
 # priority.py
+# ----------------------------------------------------
+# Script originalmente usado para calcular prioridades
+# basadas en frecuencia de tópicos. Se mantiene para
+# referencia histórica pero ya no forma parte del
+# pipeline principal.
 
 import io
 import boto3

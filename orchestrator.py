@@ -4,6 +4,10 @@ from extract import extract_reviews
 from clean import main as clean_main
 from sentiment import apply_sentiment
 from topics import apply_topics
+from config import PIPELINE_VERSION
+
+# Nota: se eliminó el uso de `priority.py` ya que la prioridad se calculaba
+# únicamente por frecuencia. El análisis ahora se realiza en el dashboard.
 
 def run_pipeline():
     """
@@ -14,7 +18,7 @@ def run_pipeline():
     4) Detecta tópicos
     """
     try:
-        print("🟡 Iniciando pipeline...")
+        print(f"🟡 Iniciando pipeline v{PIPELINE_VERSION}...")
 
         print("➡️ Extrayendo reseñas...")
         extract_reviews()
