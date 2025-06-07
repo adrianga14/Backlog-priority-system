@@ -383,70 +383,67 @@ st.markdown("---")
 
 
 # ================================================
-#10) Top 5 tópicos positivos y negativos
+# 10) Top tópicos totales, de más urgentes a menos urgentes, por POS y NEG
 # ================================================
-st.markdown("### 4) Top tópicos en el conjunto filtrado")
+st.markdown("### 4) Temas mas hablados")
 
-df_topics_agg2 = (
+# 1) Agrupo incluyendo sentiment_pred y version
+df_topics_agg = (
     df_range
-    .groupby(["topic_id", "topic_label", "sentiment_pred"])
+    .groupby(["sentiment_pred", "topic_id", "topic_label", "version"])
     .size()
     .reset_index(name="conteo")
 )
-df_topics_agg2 = df_topics_agg2[
-    ~df_topics_agg2["topic_label"].isin(["outlier", "Comentario Corto"])
+df_topics_agg = df_topics_agg[
+    ~df_topics_agg["topic_label"].isin(["outlier", "Comentario Corto"])
 ]
 
-df_pos_topics = (
-    df_topics_agg2[df_topics_agg2["sentiment_pred"].str.upper() == "POS"]
+# 2) Preparo los dos dataframes: POS y NEG
+df_pos = (
+    df_topics_agg[df_topics_agg["sentiment_pred"].str.upper() == "POS"]
     .sort_values("conteo", ascending=False)
-    .head(5)
     .copy()
 )
-df_neg_topics = (
-    df_topics_agg2[df_topics_agg2["sentiment_pred"].str.upper() == "NEG"]
+df_neg = (
+    df_topics_agg[df_topics_agg["sentiment_pred"].str.upper() == "NEG"]
     .sort_values("conteo", ascending=False)
-    .head(5)
     .copy()
 )
 
-# Limpiar etiquetas
+# 3) Limpio etiquetas y renombro columnas
 def clean_label(label: str) -> str:
     import re
     text = re.sub(r'^\d+_', '', label)
     text = text.replace('_', ' ')
     return text.title()
 
-for df_topics in (df_pos_topics, df_neg_topics):
-    df_topics["Tópico"] = df_topics["topic_label"].apply(clean_label)
-    df_topics["# de reseñas"] = df_topics["conteo"]
+for df in (df_pos, df_neg):
+    df["Tópico"]       = df["topic_label"].apply(clean_label)
+    df["# de reseñas"] = df["conteo"]
+    df["Versión"]      = df["version"]
 
-col3, col4 = st.columns(2)
-with col3:
-    st.markdown("**Top 5 tópicos Positivas**")
-    if not df_pos_topics.empty:
-        df_display = df_pos_topics[["Tópico", "# de reseñas"]].reset_index(drop=True)
-        styled = df_display.style.set_properties(
-            **{"text-align": "left", "font-size": "14px", "padding": "8px"}
-        ).set_table_styles([
-            {"selector": "th", "props": [("background-color", "#333333"), ("color", "white"), ("font-size", "15px")]}
-        ])
-        st.dataframe(styled, use_container_width=True, height=300)
-    else:
-        st.write("No se encontraron reseñas positivas para tópicos en este conjunto.")
+# 4) Muestro en dos columnas
+col1, col2 = st.columns(2)
 
-with col4:
-    st.markdown("**Top 5 tópicos Negativas**")
-    if not df_neg_topics.empty:
-        df_display = df_neg_topics[["Tópico", "# de reseñas"]].reset_index(drop=True)
-        styled = df_display.style.set_properties(
-            **{"text-align": "left", "font-size": "14px", "padding": "8px"}
-        ).set_table_styles([
-            {"selector": "th", "props": [("background-color", "#333333"), ("color", "white"), ("font-size", "15px")]}
-        ])
-        st.dataframe(styled, use_container_width=True, height=300)
-    else:
-        st.write("No se encontraron reseñas negativas para tópicos en este conjunto.")
+with col1:
+    st.markdown("**Temas que mas gustan**")
+    df_display_pos = df_pos[["Tópico", "# de reseñas", "Versión"]].head(10).reset_index(drop=True)
+    styled_pos = (
+        df_display_pos.style
+        .set_properties(**{"text-align": "left", "font-size": "14px", "padding": "8px"})
+        .set_table_styles([{"selector": "th", "props": [("background-color", "#333"),("color","white")]}])
+    )
+    st.dataframe(styled_pos, use_container_width=True, height=300)
+
+with col2:
+    st.markdown("**Temas más urgentes de antender**")
+    df_display_neg = df_neg[["Tópico", "# de reseñas", "Versión"]].head(10).reset_index(drop=True)
+    styled_neg = (
+        df_display_neg.style
+        .set_properties(**{"text-align": "left", "font-size": "14px", "padding": "8px"})
+        .set_table_styles([{"selector": "th", "props": [("background-color", "#333"),("color","white")]}])
+    )
+    st.dataframe(styled_neg, use_container_width=True, height=300)
 
 st.markdown("---")
 
