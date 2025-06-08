@@ -146,7 +146,7 @@ def apply_topics():
     if not df_pos.empty:
         print("=== ENTRENANDO BERTopic sobre POSITIVAS ===")
         docs_pos = df_pos["content_clean"].apply(remove_stopwords_neg).tolist()
-        model_pos = BERTopic(nr_topics=6, calculate_probabilities=True, verbose=False)
+        model_pos = BERTopic(nr_topics=20, calculate_probabilities=True, verbose=False)
         topics_pos, probs_pos = model_pos.fit_transform(docs_pos)
 
         info_pos = model_pos.get_topic_info()
@@ -171,11 +171,11 @@ def apply_topics():
     else:
         print("No hay reseñas POSITIVAS (>=3 palabras)\n")
 
-    # 6.f) BERTopic en NEG (6 tópicos)
+    # 6.f) BERTopic en NEG
     if not df_neg.empty:
         print("=== ENTRENANDO BERTopic sobre NEGATIVAS ===")
         docs_neg = df_neg["content_clean"].apply(remove_stopwords_neg).tolist()
-        model_neg = BERTopic(nr_topics=6, calculate_probabilities=True, verbose=False)
+        model_neg = BERTopic(nr_topics=30, calculate_probabilities=True, verbose=False)
         topics_neg, probs_neg = model_neg.fit_transform(docs_neg)
 
         info_neg = model_neg.get_topic_info()
