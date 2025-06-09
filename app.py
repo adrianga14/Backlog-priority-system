@@ -385,7 +385,7 @@ st.markdown("---")
 # ================================================
 #10) Tópicos positivos y negativos (todas, ordenadas por frecuencia)
 # ================================================
-st.markdown("### 4) Temas mas hablados")
+st.markdown("### 3) Temas mas hablados")
 
 # 1) agregamos conteo por topic y sentimiento
 df_topics_agg2 = (
@@ -443,7 +443,7 @@ for df_topics in (df_pos_topics, df_neg_topics):
 # 5) mostrar en dos columnas
 col3, col4 = st.columns(2)
 with col3:
-    st.markdown("**Temas Positivos **")
+    st.markdown("**Temas Positivos**")
     if not df_pos_topics.empty:
         df_display = df_pos_topics[["Tópico","version","# de reseñas"]].reset_index(drop=True)
         styled = df_display.style.set_properties(
@@ -475,7 +475,7 @@ st.markdown("---")
 # ================================================
 # 11) Explorador de reseñas por múltiples tópicos y calificación
 # ================================================
-st.markdown("### 5) Explora reseñas de uno o más tópicos")
+st.markdown("### 4) Explora reseñas de uno o más tópicos")
 
 sentiment_choice = st.radio(
     "Mostrar reseñas de:",
