@@ -267,7 +267,7 @@ promedio_general = df_range["score"].mean().round(2)
 st.markdown(
     f"""
     <div style="
-       
+        background-color: transparent;
         padding: 12px 20px;
         border-radius: 8px;
         margin-bottom: 10px;
