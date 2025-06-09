@@ -273,7 +273,7 @@ st.markdown(
         margin-bottom: 10px;
         display: inline-block;
     ">
-        <span style="font-size:18px; color:#FFFFFF; font-weight:500;">
+        <span style="font-size:18px; font-weight:500;">
             Calificación promedio:
         </span>
         &nbsp;
