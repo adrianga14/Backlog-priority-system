@@ -1,10 +1,10 @@
-bertopic==0.17.0
-sentence-transformers==4.1.0
-google-play-scraper==1.2.7
-stop-words==2018.7.23
+#bertopic==0.17.0
+#sentence-transformers==4.1.0
+#google-play-scraper==1.2.7
+#stop-words==2018.7.23
 streamlit
-pandas
-altair
+#pandas
+#altair
 boto3
 #torch copia 
 #pip install --upgrade torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
